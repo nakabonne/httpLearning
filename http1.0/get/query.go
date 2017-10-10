@@ -7,7 +7,7 @@ import (
 	"net/url"
 )
 
-func simpleGet() {
+func query() {
 	values := url.Values{
 		"query": {"hello world"},
 	}

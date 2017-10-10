@@ -6,7 +6,7 @@ func main() {
 	method := standardIn()
 	switch method {
 	case 1:
-		simpleGet()
+		query()
 	case 2:
 		cookie()
 	case 3:
