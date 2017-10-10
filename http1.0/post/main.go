@@ -1,33 +1,22 @@
 package main
 
-import (
-	"bytes"
-	"io"
-	"log"
-	"mime/multipart"
-	"net/http"
-	"os"
-)
+import "fmt"
 
 func main() {
-	var buffer bytes.Buffer
-	writer := multipart.NewWriter(&buffer)
-	writer.WriteField("name", "まいける")
-	fileWriter, err := writer.CreateFormFile("thumbnail", "hey.jpg")
-	if err != nil {
-		panic(err)
+	method := standardIn()
+	switch method {
+	case 1:
+		multipart_form_data()
+	default:
+		fmt.Println("数字が違います")
+		main()
 	}
-	readFile, err := os.Open("hey.jpg")
-	if err != nil {
-		panic(err)
-	}
-	defer readFile.Close()
-	io.Copy(fileWriter, readFile)
-	writer.Close()
+}
 
-	resp, err := http.Post("http://localhost:8080", writer.FormDataContentType(), &buffer)
-	if err != nil {
-		panic(err)
-	}
-	log.Println("Status:", resp.Status)
+func standardIn() int {
+	fmt.Println("メソッドを選択して下さい")
+	fmt.Println("1 multipart_form_data")
+	var i int
+	fmt.Scan(&i)
+	return i
 }
