@@ -1,19 +1,24 @@
 package main
 
-import (
-	"io/ioutil"
-	"log"
-	"net/http"
-	"net/url"
-)
+import "fmt"
 
 func main() {
-	values := url.Values{
-		"query": {"hello world"},
+	method := standardIn()
+	switch method {
+	case 1:
+		simpleGet()
+	case 2:
+		cookie()
+	default:
+		fmt.Println("数字が違います")
+		main()
 	}
+}
 
-	resp, _ := http.Get("http://localhost:8080" + "?" + values.Encode())
-	defer resp.Body.Close()
-	body, _ := ioutil.ReadAll(resp.Body)
-	log.Println(string(body))
+func standardIn() int {
+	fmt.Println("メソッドを選択して下さい")
+	fmt.Println("1 単純なGetメソッド\n2 クッキー送信")
+	var i int
+	fmt.Scan(&i)
+	return i
 }
